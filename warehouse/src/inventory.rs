@@ -1,25 +1,14 @@
 /*
- * Private
+ * Custom Modules
  */
-const FLOOR_SPACE: i32 = 10_000;
+pub mod products;
 
 /*
  * Public
  */
+pub const FLOOR_SPACE: i32 = 10_000;
 pub const MANAGER: &str = "Bob's Inventory";
 
-#[derive(Debug)]
-enum ProductCategory {
-    Ladder,
-    Hammer,
-}
-
-struct Item {
-    name: String,
-    category: ProductCategory,
-    quantity: u32,
-}
-
-fn talk_to_manager() {
+pub fn talk_to_manager() {
     println!("Hey, {MANAGER}, how's your coffee?");
 }
