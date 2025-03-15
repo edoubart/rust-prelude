@@ -1,11 +1,8 @@
+/*
+ * Custom Modules
+ */
 mod inventory;
-
-mod orders {
-    /*
-     * Public
-     */
-    pub const MANAGER: &str = "Alice Doe";
-}
+mod orders;
 
 fn main() {
     println!("The manager of our inventory is {}.", inventory::MANAGER);
