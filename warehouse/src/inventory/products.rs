@@ -1,15 +1,17 @@
 /*
  * External Crates
  */
-use fake::{Dummy};
+//use fake::{Dummy};
 
-#[derive(Debug, Dummy)]
+#[derive(Debug)]
+//#[derive(Debug, Dummy)]
 pub enum ProductCategory {
     Ladder,
     Hammer,
 }
 
-#[derive(Debug, Dummy)]
+#[derive(Debug)]
+//#[derive(Debug, Dummy)]
 pub struct Item {
     pub name: String,
     pub category: ProductCategory,

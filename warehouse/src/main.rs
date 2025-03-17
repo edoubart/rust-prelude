@@ -1,7 +1,7 @@
 /*
  * External Crates
  */
-use fake::{Fake, Faker};
+//use fake::{Fake, Faker};
 
 /*
  * Custom Modules
@@ -27,11 +27,11 @@ fn main() {
         INVENTORY_MANAGER, ORDERS_MANAGER, FLOOR_SPACE
     );
 
-    let fake_item: Item = Faker.fake();
-    println!("{:?}", fake_item);
+    //let fake_item: Item = Faker.fake();
+    //println!("{:?}", fake_item);
 
-    let random_category: ProductCategory = Faker.fake();
-    println!("{:?}", random_category);
+    //let random_category: ProductCategory = Faker.fake();
+    //println!("{:?}", random_category);
 
     //let favorite_category: ProductCategory = ProductCategory::Hammer;
     //println!("My favorite of item is {favorite_category:?}");
