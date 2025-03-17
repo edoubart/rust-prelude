@@ -1,28 +1,25 @@
 /*
  * External Crates
  */
+use fake::{Fake, Faker};
 
 /*
  * Custom Modules
  */
-mod inventory;
-mod orders;
-
-// Shortcuts
-use std::{
-    fmt,
-    io::{self, stdin, stdout},
-};
-
-use fake::{Fake, Faker};
-
-use inventory::{
+use warehouse::{
     Item,
     ProductCategory,
     FLOOR_SPACE,
-    MANAGER as INVENTORY_MANAGER,
+    INVENTORY_MANAGER,
+    ORDERS_MANAGER,
 };
-use orders::MANAGER as ORDERS_MANAGER;
+
+// Shortcuts
+//use std::collections::*; // glob operator (not recommended)
+//use std::{
+//    fmt,
+//    io::{self, stdin, stdout},
+//};
 
 fn main() {
     println!(
