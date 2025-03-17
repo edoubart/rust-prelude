@@ -9,6 +9,11 @@ mod inventory;
 mod orders;
 
 // Shortcuts
+use std::{
+    fmt,
+    io::{self, stdin, stdout},
+};
+
 use fake::{Fake, Faker};
 
 use inventory::{
