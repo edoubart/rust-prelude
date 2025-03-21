@@ -10,7 +10,7 @@ fn main() {
         Ok(contents) => println!("{contents}"),
         Err(error) => {
             eprintln!("There was an error: {:#?}", error);
-            //process::exit(1)
+            process::exit(1)
         }
     }
 }
