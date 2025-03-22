@@ -72,18 +72,49 @@ impl Accommodation for AirBnB {
 }
 
 // Entity can be of any type as long as it implements the Accommodation trait.
-fn book_for_one_night(entity: &mut impl Accommodation, guest: &str) {
+// Syntactic Sugar
+//fn book_for_one_night(entity: &mut impl Accommodation, guest: &str) {
+//    entity.book(guest, 1);
+//}
+
+// Trait Bound (Generic) syntax
+fn book_for_one_night<T: Accommodation>(entity: &mut T, guest: &str) {
     entity.book(guest, 1);
 }
 
+// Option 1:
+fn mix_and_match(
+    first: &mut impl Accommodation,
+    second: &mut impl Accommodation,
+    guest: &str
+) {
+    first.book(guest, 1);
+    second.book(guest, 1);
+}
+
+// Option 2:
+//fn mix_and_match<T: Accommodation, U: Accommodation>(
+//    first: &mut T,
+//    second: &mut U,
+//    guest: &str
+//) {
+//    first.book(guest, 1);
+//    second.book(guest, 1);
+//}
+
 fn main() {
     let mut hotel: Hotel = Hotel::new("The Luxe");
-    book_for_one_night(&mut hotel, "Piers");
-    println!("{hotel:#?}");
-
     let mut airbnb: AirBnB = AirBnB::new("Peter");
-    book_for_one_night(&mut airbnb, "Amanda");
-    println!("{airbnb:#?}");
+    mix_and_match(&mut hotel, &mut airbnb, "Piers");
+    println!("{hotel:#?} {airbnb:#?}");
+
+    //let mut hotel: Hotel = Hotel::new("The Luxe");
+    //book_for_one_night(&mut hotel, "Piers");
+    //println!("{hotel:#?}");
+
+    //let mut airbnb: AirBnB = AirBnB::new("Peter");
+    //book_for_one_night(&mut airbnb, "Amanda");
+    //println!("{airbnb:#?}");
 
     //let mut hotel: Hotel = Hotel::new("The Luxe");
     //println!("{}", hotel.summarize());
