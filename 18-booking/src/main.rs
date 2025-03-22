@@ -5,7 +5,9 @@ use std::collections::HashMap;
  * Traits
  */
 trait Accommodation {
-    fn get_description(&self) -> String;
+    fn get_description(&self) -> String {
+        String::from("A wonderful place to stay.")
+    }
     fn book(&mut self, name: &str, nights: u32);
 }
 
@@ -30,9 +32,9 @@ impl Hotel {
 }
 
 impl Accommodation for Hotel {
-    fn get_description(&self) -> String {
-        format!("{} is the pinnacle of luxury.", self.name)
-    }
+    //fn get_description(&self) -> String {
+    //    format!("{} is the pinnacle of luxury.", self.name)
+    //}
 
     fn book(&mut self, name: &str, nights: u32) {
         self.reservations.insert(name.to_string(), nights);
@@ -66,9 +68,13 @@ impl Accommodation for AirBnB {
 }
 
 fn main() {
-    let hotel: Hotel = Hotel::new("The Luxe");
+    let mut hotel: Hotel = Hotel::new("The Luxe");
     println!("{}", hotel.get_description());
+    hotel.book("Piers", 5);
+    println!("{:#?}", hotel);
 
-    let airbnb: AirBnB = AirBnB::new("Peter");
+    let mut airbnb: AirBnB = AirBnB::new("Peter");
     println!("{}", airbnb.get_description());
+    airbnb.book("Piers", 3);
+    println!("{:#?}", airbnb);
 }
