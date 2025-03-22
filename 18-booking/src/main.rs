@@ -71,14 +71,27 @@ impl Accommodation for AirBnB {
     }
 }
 
+// Entity can be of any type as long as it implements the Accommodation trait.
+fn book_for_one_night(entity: &mut impl Accommodation, guest: &str) {
+    entity.book(guest, 1);
+}
+
 fn main() {
     let mut hotel: Hotel = Hotel::new("The Luxe");
-    println!("{}", hotel.summarize());
-    hotel.book("Piers", 5);
-    println!("{:#?}", hotel);
+    book_for_one_night(&mut hotel, "Piers");
+    println!("{hotel:#?}");
 
     let mut airbnb: AirBnB = AirBnB::new("Peter");
-    println!("{}", airbnb.get_description());
-    airbnb.book("Piers", 3);
-    println!("{:#?}", airbnb);
+    book_for_one_night(&mut airbnb, "Amanda");
+    println!("{airbnb:#?}");
+
+    //let mut hotel: Hotel = Hotel::new("The Luxe");
+    //println!("{}", hotel.summarize());
+    //hotel.book("Piers", 5);
+    //println!("{:#?}", hotel);
+
+    //let mut airbnb: AirBnB = AirBnB::new("Peter");
+    //println!("{}", airbnb.get_description());
+    //airbnb.book("Piers", 3);
+    //println!("{:#?}", airbnb);
 }
