@@ -1,5 +1,6 @@
 // Cargo Crates
 use std::collections::HashMap;
+use std::fmt::Display;
 
 /*
  * Traits
@@ -20,31 +21,35 @@ trait Description {
 
 // Hotel
 #[derive(Debug)]
-struct Hotel {
-    name: String,
+struct Hotel<T> {
+    name: T,
     reservations: HashMap<String, u32>,
 }
 
-impl Hotel {
-    fn new(name: &str) -> Self {
+// For Hotel of type T ...
+impl<T> Hotel<T> {
+    fn new(name: T) -> Self {
         Self {
-            name: name.to_string(),
+            name,
             reservations: HashMap::new(),
         }
     }
+}
 
+// For Hotel of type T that implements the Display trait ...
+impl<T: Display> Hotel<T> {
     fn summarize(&self) -> String {
         format!("{}: {}", self.name, self.get_description())
     }
 }
 
-impl Accommodation for Hotel {
+impl<T> Accommodation for Hotel<T> {
     fn book(&mut self, name: &str, nights: u32) {
         self.reservations.insert(name.to_string(), nights);
     }
 }
 
-impl Description for Hotel {}
+impl<T> Description for Hotel<T> {}
 
 // AirBnB
 #[derive(Debug)]
@@ -122,30 +127,18 @@ where
 
 fn choose_best_place_to_stay() -> impl Accommodation + Description {
     Hotel::new("The Luxe")
-    //AirBnB::neW("Peter")
+    //AirBnB::new("Peter")
 }
 
 fn main() {
-    let mut hotel = choose_best_place_to_stay();
-    let mut airbnb: AirBnB = AirBnB::new("Peter");
-    mix_and_match(&mut hotel, &mut airbnb, "Piers");
-    //println!("{hotel:#?} {airbnb:#?}");
+    let hotel_1: Hotel<String> = Hotel::new(String::from("The Luxe"));
+    println!("{}", hotel_1.summarize());
 
-    //let mut hotel: Hotel = Hotel::new("The Luxe");
-    //book_for_one_night(&mut hotel, "Piers");
-    //println!("{hotel:#?}");
+    let hotel_2: Hotel<&str> = Hotel::new("The Golden Standard");
+    println!("{}", hotel_2.summarize());
 
-    //let mut airbnb: AirBnB = AirBnB::new("Peter");
-    //book_for_one_night(&mut airbnb, "Amanda");
-    //println!("{airbnb:#?}");
-
-    //let mut hotel: Hotel = Hotel::new("The Luxe");
-    //println!("{}", hotel.summarize());
-    //hotel.book("Piers", 5);
-    //println!("{:#?}", hotel);
-
-    //let mut airbnb: AirBnB = AirBnB::new("Peter");
-    //println!("{}", airbnb.get_description());
-    //airbnb.book("Piers", 3);
-    //println!("{:#?}", airbnb);
+    let hotel_3: Hotel<Vec<&str>> = Hotel::new(
+        vec!["The Sweet Escape", "Hilton Edition"]
+    );
+    //println!("{}", hotel_3.summarize()); // Doesn't work!
 }
