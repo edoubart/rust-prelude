@@ -5,10 +5,13 @@ use std::collections::HashMap;
  * Traits
  */
 trait Accommodation {
+    fn book(&mut self, name: &str, nights: u32);
+}
+
+trait Description {
     fn get_description(&self) -> String {
         String::from("A wonderful place to stay.")
     }
-    fn book(&mut self, name: &str, nights: u32);
 }
 
 /*
@@ -36,14 +39,12 @@ impl Hotel {
 }
 
 impl Accommodation for Hotel {
-    //fn get_description(&self) -> String {
-    //    format!("{} is the pinnacle of luxury.", self.name)
-    //}
-
     fn book(&mut self, name: &str, nights: u32) {
         self.reservations.insert(name.to_string(), nights);
     }
 }
+
+impl Description for Hotel {}
 
 // AirBnB
 #[derive(Debug)]
@@ -62,12 +63,14 @@ impl AirBnB {
 }
 
 impl Accommodation for AirBnB {
-    fn get_description(&self) -> String {
-        format!("Please enjoy {}'s apartment.", self.host)
-    }
-
     fn book(&mut self, name: &str, nights: u32) {
         self.guests.push((name.to_string(), nights));
+    }
+}
+
+impl Description for AirBnB {
+    fn get_description(&self) -> String {
+        format!("Please enjoy {}'s apartment.", self.host)
     }
 }
 
@@ -84,16 +87,21 @@ fn book_for_one_night<T: Accommodation>(entity: &mut T, guest: &str) {
 
 // Option 1:
 fn mix_and_match(
-    first: &mut impl Accommodation,
+    // The first parameter will be a mutable reference to some type that
+    // implements both, Accommodation and Description traits.
+    first: &mut (impl Accommodation + Description),
+    // The second parameter promises to implement only the Accommodation trait.
     second: &mut impl Accommodation,
     guest: &str
 ) {
     first.book(guest, 1);
+    first.get_description();
+
     second.book(guest, 1);
 }
 
 // Option 2:
-//fn mix_and_match<T: Accommodation, U: Accommodation>(
+//fn mix_and_match<T: Accommodation + Description, U: Accommodation>(
 //    first: &mut T,
 //    second: &mut U,
 //    guest: &str
