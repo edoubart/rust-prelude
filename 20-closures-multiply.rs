@@ -20,6 +20,15 @@ fn main() {
         return value * multiplier;
     };
 
+    /*
+     * Shortcuts:
+     */
+    //let multiply_by = |value: i32| value * multiplier;
+    //let multiply_by = |value| value * multiplier as i32;
+    // Type inferred from first invokation (!= Generics)
+    let multiply_by = |value| value * multiplier; 
+    // let mirror = |value| value;
+
     println!("{}", multiply_by(2));
 
     // `impl Fn(i32, i32) -> i32`
