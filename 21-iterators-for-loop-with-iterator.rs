@@ -3,6 +3,19 @@
  */
 use std::vec::IntoIter as IntoIterVec;
 
+/*
+ * 1. Move of Ownership:
+ *   - `for element in collection`
+ *   - `for element in collection.into_iter()
+ *
+ * 2. Borrowing of Immutable References:
+ *   - `for element in &collection`
+ *   - `for element in collection.iter()`
+ *
+ * 3. Borrowing of Mutable References:
+ *   - `for element in &mut collection`
+ *   - `for element in collection.iter_mut()`
+ */
 fn main() {
     let my_vector: Vec<i32> = vec![4, 8, 15, 16, 23, 42];
     // `pub struct IntoIter<T>`
