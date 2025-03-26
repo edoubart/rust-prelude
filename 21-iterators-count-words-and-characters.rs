@@ -8,12 +8,23 @@ fn count_characters(text: &str) -> HashMap<char, u32> {
     let words: SplitWhitespace<'_> = text.split_whitespace();
     let mut counts: HashMap<char, u32> = HashMap::new();
 
-    for word in words {
-        for character in word.chars() {
+    //for word in words {
+    //    for character in word.chars() {
+    //        let count: &mut u32 = counts.entry(character).or_insert(0);
+    //        *count += 1;
+    //    }
+    //}
+
+    /*
+     * The `.for_each()` method applies a consistent operation to every iterator
+     * element. It accepts a closure.
+     */
+    words.for_each(|word: &str| {
+        word.chars().for_each(|character: char| {
             let count: &mut u32 = counts.entry(character).or_insert(0);
             *count += 1;
-        }
-    }
+        });
+    });
 
     counts
 }
