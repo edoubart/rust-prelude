@@ -1,22 +1,25 @@
 /*
  * Cargo Crates
  */
-use crate::attractions::{MovieTheatre, TicketSeller};
+use crate::attractions::TicketSeller;
+//use crate::attractions::{MovieTheatre, TicketSeller};
 
 /*
  * Structs
  */
 #[derive(Debug)]
-struct VenueManagement {
-    venue: MovieTheatre,
+struct VenueManagement<T: TicketSeller> {
+    venue: T,
     manager: Option<String>,
 }
 
-impl VenueManagement {
-    fn new() -> Self {
+impl<T: TicketSeller> VenueManagement<T> {
+    // Dependency Injection
+    fn new(venue: T) -> Self {
         Self {
-            // Inline creation
-            venue: MovieTheatre::new(),
+            venue,
+            // Inline creation (completely coupled)
+            //venue: MovieTheatre::new(),
             manager: None,
         }
     }
@@ -38,9 +41,23 @@ mod tests {
     use super::*;
     use pretty_assertions::assert_eq;
 
+    /*
+     * Structs
+     */
+    struct DummyVenue {}
+
+    impl TicketSeller for DummyVenue {
+        fn sell_ticket(&mut self) {}
+    }
+
     #[test]
     fn venue_management_can_hire_manager() {
-        let mut venue_management: VenueManagement = VenueManagement::new();
+        let dummy_venue: DummyVenue = DummyVenue {};
+        let mut venue_management: VenueManagement<DummyVenue> =
+            VenueManagement::new(dummy_venue);
+        //let movie_theatre: MovieTheatre = MovieTheatre::new();
+        //let mut venue_management: VenueManagement<MovieTheatre> =
+        //    VenueManagement::new(movie_theatre);
         venue_management.hire_manager("Mario");
         assert_eq!(venue_management.manager.unwrap(), String::from("Mario"));
     }
