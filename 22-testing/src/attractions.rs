@@ -1,7 +1,7 @@
 /*
  * Traits
  */
-trait TicketSeller {
+pub trait TicketSeller {
     fn sell_ticket(&mut self);
 }
 
@@ -44,13 +44,13 @@ impl TicketSeller for Museum {
 }
 
 #[derive(Debug)]
-struct MovieTheatre {
+pub struct MovieTheatre {
     movies: Vec<String>,
     sales: u32,
 }
 
 impl MovieTheatre {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             movies: vec![],
             sales: 0,
@@ -69,7 +69,7 @@ impl TicketSeller for MovieTheatre {
 }
 
 #[cfg(test)]
-mod tests{
+mod tests {
     /*
      * To **test** is "to check the quality, performance, or reliability of
      * something".
