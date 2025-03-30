@@ -62,7 +62,11 @@ impl Museum {
 
 impl TicketSeller for Museum {
     fn sell_ticket(&mut self) {
-        self.revenue += 25;
+        if self.has_impressive_collection() {
+            self.revenue += 35;
+        } else {
+            self.revenue += 25;
+        }
     }
 }
 
@@ -252,5 +256,31 @@ mod tests {
         museum.buy_painting("Girl with a Pearl Earring");
         museum.buy_painting("Water Lilies"); // Should panic here!
     }
-}
 
+    /*
+     * **Test-driven development (TDD)** is a paradigm that encourages you to write
+     * your tests firsts.
+     *
+     * The mantra of TDD is "Red, Green, Refactor":
+     *   1. Write a test that fails (Red);
+     *   2. Make the code work (Green);
+     *   3. Eliminate redundancy (Refactor).
+     *
+     * Advantages:
+     *   - TDD will guarantee that you have tests for your code.
+     *   - TDD reduces overtesting (writing the same test multiple times).
+     *   - TDD forces you to define your contract before you write the code.
+     *   - TDD simplifies the complexity of both the tests and the implementation.
+     */
+    #[test]
+    pub fn museum_with_impressive_art_collection_charges_more_for_admission() {
+        let mut museum: Museum = Museum::new();
+        museum.buy_painting("Mona Lisa");
+        museum.buy_painting("The Starry Night");
+        museum.buy_painting("Girl with a Pearl Earring");
+
+        museum.sell_ticket();
+
+        assert_eq!(museum.revenue, 35);
+    }
+}

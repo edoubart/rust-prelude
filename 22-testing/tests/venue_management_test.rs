@@ -54,7 +54,7 @@ fn venue_management_interacts_with_museum(museum_with_three_paintings: Museum) {
     venue_management.make_money();
 
     assert_eq!(venue_management.venue.paintings.len(), 3);
-    assert_eq!(venue_management.venue.revenue, 25);
+    assert_eq!(venue_management.venue.revenue, 35);
 }
 
 #[rstest]
