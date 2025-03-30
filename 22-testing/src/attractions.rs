@@ -9,22 +9,22 @@ pub trait TicketSeller {
  * Structs
  */
 #[derive(Debug, Eq, PartialEq)]
-struct Museum {
-    paintings: Vec<String>,
-    revenue: u32,
+pub struct Museum {
+    pub paintings: Vec<String>,
+    pub revenue: u32,
 }
 
 impl Museum {
     const MAXIMUM_CAPACITY: usize = 3;
 
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             paintings: vec![],
             revenue: 0,
         }
     }
 
-    fn buy_painting(&mut self, painting: &str) {
+    pub fn buy_painting(&mut self, painting: &str) {
         if self.paintings.len() >= Self::MAXIMUM_CAPACITY {
             panic!("Museum does not have storage space for another painting!");
         }

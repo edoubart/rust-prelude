@@ -8,14 +8,14 @@ use crate::attractions::TicketSeller;
  * Structs
  */
 #[derive(Debug)]
-struct VenueManagement<T: TicketSeller> {
-    venue: T,
-    manager: Option<String>,
+pub struct VenueManagement<T: TicketSeller> {
+    pub venue: T,
+    pub manager: Option<String>,
 }
 
 impl<T: TicketSeller> VenueManagement<T> {
     // Dependency Injection
-    fn new(venue: T) -> Self {
+    pub fn new(venue: T) -> Self {
         Self {
             venue,
             // Inline creation (completely coupled)
@@ -28,7 +28,7 @@ impl<T: TicketSeller> VenueManagement<T> {
         self.manager = Some(manager.to_string());
     }
 
-    fn make_money(&mut self) {
+    pub fn make_money(&mut self) {
         self.venue.sell_ticket();
     }
 }
