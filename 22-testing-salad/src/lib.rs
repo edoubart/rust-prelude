@@ -77,23 +77,6 @@ pub struct Salad {
 }
 
 impl Salad {
-    /// Creates a new Salad instance.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// let protein: Protein = Protein::CrispyChicken;
-    /// let tomato: Vegetable = Vegetable::Tomato;
-    /// let cucumber: Vegetable = Vegetable::Cucumber;
-    /// let vegetables = vec![tomato, cucumber];
-    /// let dressing: Dressing = Dressing::Ranch;
-    /// 
-    /// let salad: Salad = Salad::new(protein, vegetables, dressing);
-    ///
-    /// assert_eq!(salad.protein, protein);
-    /// assert_eq!(salad.vegetables, vec![tomato, cucumber]);
-    /// assert_eq!(salad.dressing, dressing);
-    /// ```
     fn new(
         protein: Protein,
         vegetables: Vec<Vegetable>,
@@ -112,49 +95,59 @@ impl Salad {
 
     fn calories(&self) -> u32 {
         let protein_calories: u32 = self.protein.calories();
+
+        // Option 1 (better, less iterations):
         let vegetables_calories: u32 = self.vegetables
             .iter()
             .fold(0, |mut sum, vegetable| {
                 sum += vegetable.calories();
                 sum
             });
+
+        // Option 2:
         //let vegetables_calories: u32 = self.vegetables
         //    .iter()
         //    .map(|vegetable| vegetable.calories())
         //    .sum();
+
         let dressing_calories: u32 = self.dressing.calories();
 
         protein_calories + vegetables_calories + dressing_calories
     }
 
-    fn has_duplicate_vegetables(&self) -> bool {
-        let mut result: bool = false;
-
-        let mut vegetables_found: HashSet<Vegetable> = HashSet::new();
-
-        for vegetable in &self.vegetables {
-            if vegetables_found.contains(&vegetable) {
-                result = true;
-                break;
-            } else {
-                vegetables_found.insert(vegetable.clone());
-            }
-        }
-
-        result
-    }
-
+    // Option 1 (procedural/imperative):
     //fn has_duplicate_vegetables(&self) -> bool {
-    //    self.vegetables
-    //        .clone()
-    //        .into_iter()
-    //        .fold(HashSet<Vegetable>::new(), |mut data, vegetable| {
-    //            data.insert(vegetable);
-    //            data;
-    //        })
-    //        .len()
-    //        < self.vegetable.len()
+    //    let mut result: bool = false;
+
+    //    let mut vegetables_found: HashSet<Vegetable> = HashSet::new();
+
+    //    for vegetable in &self.vegetables {
+    //        if vegetables_found.contains(&vegetable) {
+    //            result = true;
+
+    //            break;
+    //        }
+    //        else {
+    //            vegetables_found.insert(vegetable.clone());
+    //        }
+    //    }
+
+    //    result
     //}
+
+    // Option 2 (functional/declarative):
+    fn has_duplicate_vegetables(&self) -> bool {
+        self.vegetables
+            .clone()
+            .into_iter()
+            .fold(HashSet::<Vegetable>::new(), |mut data, vegetable| {
+                data.insert(vegetable);
+    
+                data
+            })
+            .len()
+            < self.vegetables.len()
+    }
 }
 
 #[cfg(test)]
@@ -162,19 +155,13 @@ mod tests {
     /*
      * Cargo Crates
      */
-    //use super::*;
     use pretty_assertions::assert_eq;
     use rstest::{fixture, rstest};
 
     /*
      * Custom Modules
      */
-    use restaurant::{
-        Dressing,
-        Protein,
-        Salad,
-        Vegetable,
-    };
+    use super::*;
 
     #[fixture]
     fn crispy_chicken_salad_with_two_vegetables_and_ranch_dressing() -> Salad {
@@ -199,7 +186,7 @@ mod tests {
 
         let dressing: Dressing = Dressing::Ranch;
 
-        let salad: Salad = Salad::new(protein, vegetables, dressing)
+        let salad: Salad = Salad::new(protein, vegetables, dressing);
 
         assert_eq!(salad.protein, Protein::CrispyChicken);
         assert_eq!(salad.vegetables, vec![Vegetable::Tomato, Vegetable::Cucumber]);
@@ -220,10 +207,12 @@ mod tests {
     fn salad_calculates_total_calories_from_ingredients(
         crispy_chicken_salad_with_two_vegetables_and_ranch_dressing: Salad
     ) {
-        assert!(
+        let total_calories: u32 = 400 + (20 + 15) + 150;
+
+        assert_eq!(
             crispy_chicken_salad_with_two_vegetables_and_ranch_dressing
                 .calories(),
-            400 + (20 + 15) + 150
+            total_calories
         );
     }
 
@@ -232,13 +221,13 @@ mod tests {
         let protein: Protein = Protein::CrispyChicken;
 
         let tomato: Vegetable = Vegetable::Tomato;
-        let cucumber: Vegetable = Vegetable::Cucumber;
-        let cucumber: Vegetable = Vegetable::Cucumber;
-        let vegetables = vec![tomato, cucumber, cucumber];
+        let cucumber_1: Vegetable = Vegetable::Cucumber;
+        let cucumber_2: Vegetable = Vegetable::Cucumber;
+        let vegetables = vec![tomato, cucumber_1, cucumber_2];
 
         let dressing: Dressing = Dressing::Ranch;
 
-        let salad: Salad = Salad::new(protein, vegetables, dressing)
+        let salad: Salad = Salad::new(protein, vegetables, dressing);
 
         assert!(salad.has_duplicate_vegetables());
     }
