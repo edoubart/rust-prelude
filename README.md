@@ -23,4 +23,5 @@ My personal R&D on Rust:
   20. Closures
   21. Iterators
   22. Testing
+  23. Randomness
 
