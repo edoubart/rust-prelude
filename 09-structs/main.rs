@@ -8,7 +8,7 @@ struct Flight {
 
 // Associated Functions
 impl Flight {
-    // Constructor (the name `new` is up tu us)
+    // Constructor (the name `new` is up to us)
     fn new(
         origin: String,
         destination: String,
