@@ -25,4 +25,5 @@ My personal R&D on Rust:
   22. Testing
   23. Randomness
   24. DateTimes
+  25. Regular Expressions
 
