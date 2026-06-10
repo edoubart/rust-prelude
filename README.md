@@ -26,4 +26,5 @@ My personal R&D on Rust:
   23. Randomness
   24. DateTimes
   25. Regular Expressions
+  26. Smart Pointers
 
