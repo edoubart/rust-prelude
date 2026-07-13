@@ -29,4 +29,5 @@ My personal R&D on Rust:
   26. Smart Pointers
   27. Smart Pointers II
   28. Concurrency
+  29. Rc and Arc
 
