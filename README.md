@@ -28,4 +28,5 @@ My personal R&D on Rust:
   25. Regular Expressions
   26. Smart Pointers
   27. Smart Pointers II
+  28. Concurrency
 
